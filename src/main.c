@@ -60,7 +60,7 @@ void led_Proc(){
 
 
 void main(){
-    
+    Timer0Init();
     while(1){
         key_Proc();
     }
