@@ -29,9 +29,14 @@ code unsigned char seg_Table[]= {
  * @param value 数码管上将要显示的数字-段选 
  */
 void Seg_Disp(unsigned char position,unsigned char value ){
+    P0 = seg_Table[0];
+    P2 = 0xDF;
+    P2 = 0XFF;
     P0 = seg_Table[value];
     P2 = 0xDF;
+    P2 = 0xff;
     P0 = ~(0x80>>position) ;
+    P2 = 0xff;
     P2 = 0xff;
 }
 

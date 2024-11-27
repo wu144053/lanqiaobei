@@ -74,6 +74,8 @@ void main(){
 void Timer0Server() interrupt 1{
      TL0 = 0x20;
      TH0 = 0xD1;
+     if(++Seg_Pos==6)Seg_Pos = 0;
+     Seg_Disp(Seg_Pos,Seg_Buf[Seg_Pos]);
      if(++key_slow_down == 10)key_slow_down = 0;
      if(++seg_slow_down == 500) seg_slow_down = 0;
      if(seg_slow_down == 6) seg_slow_down = 0;
