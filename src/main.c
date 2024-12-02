@@ -30,6 +30,7 @@ void key_Proc(){
     key_down = key_val & (key_val ^ key_old);//捕捉下降沿
     key_old = key_val ;// 按键扫描
 }
+
 /**
  * @brief 定时器初始化函数
  */
