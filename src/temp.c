@@ -36,7 +36,7 @@ void Delay1ms(unsigned char ms)		//@12.000MHz
     }
 }
 
-void main(){
+void main01(){
     unsigned char i ;
     while (1)
     {

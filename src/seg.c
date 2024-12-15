@@ -18,7 +18,7 @@ extern char seg_Table[]= {
     0xa1,           //D
     0x86,           //E
     0x8e,           //F
-    0x00,           //空
+    0xff,           //空
     0xBF,           //-
 };
 
@@ -29,28 +29,49 @@ extern char seg_Table[]= {
  * 
  * @param value 数码管上将要显示的数字-段选 
  */
-void Seg_Disp(unsigned char position,unsigned char value ){
-    P0 = 0x00;
-    P2 = 0xef;
-    P2 = 0x1f;
-    switch (position)
-    {
-    case 0 :P0 |= 0x01;break;
-    case 1 :P0 |= 0x02;break;
-    case 2 :P0 |= 0x04;break;
-    case 3 :P0 |= 0X08;break;
-    case 4 :P0 |= 0x10;break; 
-    case 5 :P0 |= 0x20;break;
-    case 6 :P0 |= 0x40;break;
-    case 7 :P0 |= 0x80;break;
-    default:
-        break;
+void Seg_Disp(unsigned char* seg_buf){
+    int j;
+    unsigned char i;
+    for (i = 0; i < 8; i++) {
+        P0 = 0x00;
+        P2 = 0xef;
+        P2 = 0x1f;
+        switch (i) {
+            case 0:
+                P0 |= 0x01;
+                break;
+            case 1:
+                P0 |= 0x02;
+                break;
+            case 2:
+                P0 |= 0x04;
+                break;
+            case 3:
+                P0 |= 0X08;
+                break;
+            case 4:
+                P0 |= 0x10;
+                break;
+            case 5:
+                P0 |= 0x20;
+                break;
+            case 6:
+                P0 |= 0x40;
+                break;
+            case 7:
+                P0 |= 0x80;
+                break;
+            default:
+                break;
+        }
+        P2 = 0xcf;
+        P2 = 0x1f;
+        P0 = seg_Table[*(seg_buf + i)];
+        P2 = 0xef;
+        P2 = 0x1f;
+        j =1500 ;while (j--);
+        
     }
-    P2 = 0xcf;
-    P2 = 0x1f;
-    P0 = seg_Table[value];
-    P2 = 0xef;
-    P2 = 0x1f;
 }
 
 /**
@@ -61,10 +82,4 @@ void Seg_Disp(unsigned char position,unsigned char value ){
  * @param length 显示数码管的长度
  * 
  */
-void Seg_proc_jinjie(unsigned char *seg_num ,unsigned char length){
-    unsigned char i;
-    for( i = 0 ; i< length ;i++){
-        Seg_Disp(i,seg_num[i]);
-    }
-}
 

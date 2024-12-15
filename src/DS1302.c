@@ -76,6 +76,17 @@ void DS1302_write_RTC( unsigned char* clock){
 }
 
 /**
+ *@brief 写入日期
+ * 
+ */
+void DS1302_write_date(unsigned char* date){
+	Write_Ds1302_Byte(0x8e,0x00);
+	Write_Ds1302_Byte(0x8c,date[0]);
+	Write_Ds1302_Byte(0x88,date[1]);
+	Write_Ds1302_Byte(0x86,date[2]);
+	Write_Ds1302_Byte(0x8e,0x80);
+}
+/**
  * @brief 读取DS1302 的时间
  * 
  * @param clock 存储时间的数组
@@ -84,4 +95,10 @@ void DS1302_read_RTC(unsigned char* clock){
     clock[0] = Read_Ds1302_Byte(0x85);//读取小时，存在clock[0]
     clock[1] = Read_Ds1302_Byte(0x83);//读取分钟，存在clock[1]
     clock[2] = Read_Ds1302_Byte(0x81);//读取秒，存储在clock[2]
+}
+
+void DS1302_read_date(unsigned char* date){
+	date[0] = Read_Ds1302_Byte(0x8d);//读取年份
+	date[1] = Read_Ds1302_Byte(0x89);//读取月份
+	date[2] = Read_Ds1302_Byte(0x87);//读取日期
 }

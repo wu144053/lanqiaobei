@@ -8,5 +8,7 @@ void Write_Ds1302_Byte( unsigned char address,unsigned char dat );
 unsigned char Read_Ds1302_Byte ( unsigned char address );
 void DS1302_read_RTC(unsigned char* clock);
 void DS1302_write_RTC( unsigned char* clock);
+void DS1302_write_date(unsigned char* date);
+void DS1302_read_date(unsigned char* date);
 
 #endif //  _DS1302_H
