@@ -14,7 +14,7 @@
 unsigned char key_flag,key_count,key_old_flag,key_now_flag;
 unsigned char seg_slow_down;
 unsigned char Seg_Pos ;//扫描数码管
-unsigned char Seg_Buf[8] = {0,0,0,0,0,0,0,0};
+unsigned char Seg_Buf[8] = {0,0,0,0,0,0,0,0 };
 unsigned char RTC_clock[3]={0x23,0x59,0x59};
 unsigned char Seg_disp_Mode = 0;//0-时间显示1-日期显示2-闹钟3-时间设置4-日期设置5-闹钟设置
 unsigned char ucdate_seg[3] ={0x24,0x12,0x04};
@@ -54,6 +54,9 @@ void key_Proc()
         case 14:
             if (Seg_disp_Mode < 3) {                             // 在非参数设置状态下使能
                 if (++Seg_disp_Mode == 3) { Seg_disp_Mode = 0; } // 在0——2间循环切换
+                if(Seg_disp_Mode==1 || Seg_disp_Mode == 0){
+                    ucAlarm_dat_index = 0;
+                }
             }
             break;
         case 15: // 参数设置按键
@@ -85,6 +88,11 @@ void key_Proc()
                     }
                 }
                 break;
+                case 16: //设置退出按键
+                    Seg_disp_Mode -=3;
+                    Input_flag = 0;
+                    set_index = 0;
+                    break; 
                 case 17: // 闹钟切换按键
                     if (Seg_disp_Mode == 2 || Seg_disp_Mode == 5) {
                         if (++ucAlarm_dat_index == 3) {
@@ -97,7 +105,7 @@ void key_Proc()
                         Beep_Enable_Flag ^= 1;
                     }
                     break;
-                case 19:
+                case 19: //闹钟清除按键
                     if (Seg_disp_Mode == 5) {
                         unsigned char i;
                         for (i = 0; i < 3; i++) {
@@ -168,9 +176,9 @@ unsigned char seg_judgement(unsigned char* Data, unsigned char mode){
         }
     }
     if(mode == 0){
-        //if(Dat_Arry[0]>=24 || Dat_Arry[1] >= 60 || Dat_Arry[2] >= 60 || Dat_Arry[ 0] < 0 || Dat_Arry[1]< 0 || Dat_Arry[2] < 0){
-        return 1;          // return 0;;
-        //}
+        if(Dat_Arry[0]>=24 || Dat_Arry[1] >= 60 || Dat_Arry[2] >= 60 || Dat_Arry[ 0] < 0 || Dat_Arry[1]< 0 || Dat_Arry[2] < 0){
+            return 0;          
+        }
     }
     if(mode == 2){
 
@@ -228,7 +236,7 @@ void Seg_proc(){
             Seg_Buf[3 * i]     = Set_data[i + 3 * ucAlarm_dat_index] / 16;
             Seg_Buf[3 * i + 1] = Set_data[i + 3 * ucAlarm_dat_index] % 16;
         }
-        Seg_Buf[2] = Seg_Buf[7] = 17;
+        Seg_Buf[2] = Seg_Buf[5] = 17;
         Seg_Buf[set_index * 3 ] = seg_star_flag ? Set_data[set_index + 3 * ucAlarm_dat_index] /16: 16; 
         Seg_Buf[set_index * 3 + 1] = seg_star_flag ? Set_data[set_index + 3 * ucAlarm_dat_index] %16: 16; 
         Seg_Disp(Seg_Buf);
