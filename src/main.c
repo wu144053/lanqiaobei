@@ -262,6 +262,7 @@ void Seg_proc(){
 /*led显示函数 */
 void led_Proc(){
     unsigned char i;
+    if(Seg_Pos)return;
     for(i = 1 ; i < 4 ; i++){
         ucled[i] = !(( i == ucAlarm_dat_index + 1 ) * (Seg_disp_Mode == 2 || Seg_disp_Mode == 5));//互斥点亮，选中哪一个的闹钟
     }
@@ -299,7 +300,7 @@ void main(){
     while(1){
         key_Proc();
         Seg_proc();
-        led_Proc();
+        led_Proc();//lcd函数有bug可能引起锁存器混乱导致数码管显示错误
     }
 }
 
