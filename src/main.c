@@ -6,7 +6,7 @@
 #include"STRING.H"
 
 /*宏定义区 锁存器开启 */
-#define LED 0x8f
+#define LED 0x9f
 #define seg_paragraph 0xcf
 #define seg_bit 0xef
 
