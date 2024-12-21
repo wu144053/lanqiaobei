@@ -248,7 +248,7 @@ void led_Proc(){
     
 }
 
-void main01(){
+void main01_(){
     Timer0Init();
     P42 = 1;
     DS1302_write_date(ucdate_seg);
