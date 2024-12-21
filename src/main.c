@@ -263,6 +263,7 @@ void Seg_proc(){
 void led_Proc(){
     unsigned char i;
     if(Seg_Pos)return;
+    P2 = 0x1f;
     for(i = 1 ; i < 4 ; i++){
         ucled[i] = !(( i == ucAlarm_dat_index + 1 ) * (Seg_disp_Mode == 2 || Seg_disp_Mode == 5));//互斥点亮，选中哪一个的闹钟
     }
