@@ -15,18 +15,19 @@ unsigned char key_flag,key_count,key_old_flag,key_now_flag;
 unsigned char seg_slow_down;
 unsigned char Seg_Pos ;//扫描数码管
 unsigned char Seg_Buf[8] = {0,0,0,0,0,0,0,0 };
-unsigned char RTC_clock[3]={0x23,0x59,0x59};
+code unsigned char RTC_clock[3]={0x23,0x59,0x59};
 unsigned char Seg_disp_Mode = 0;//0-时间显示1-日期显示2-闹钟3-时间设置4-日期设置5-闹钟设置
-unsigned char ucdate_seg[3] ={0x24,0x12,0x04};
-unsigned char ucAlarm_data [9] = {0x00,0x00,0x00,0x00,0x00,0x00,0xbb,0xbb,0xbb};
+code unsigned char ucdate_seg[3] ={0x24,0x12,0x04};
+code unsigned char ucAlarm_data [9] = {0x00,0x00,0x00,0x00,0x00,0x00,0xbb,0xbb,0xbb};
 unsigned char ucAlarm_dat_index = 0;
-unsigned char* seg_Mode_flag[3] = {RTC_clock,ucdate_seg,ucAlarm_data};
+code unsigned char* seg_Mode_flag[3] = {RTC_clock,ucdate_seg,ucAlarm_data};
 unsigned char set_index;//设置的位数
 unsigned char Set_data[9];//存储设置的数据
 unsigned char Input_flag;//设置存储的位数0为十位数1为个位数
 unsigned char seg_star_flag,time500ms_count;
 unsigned char led_temp;
 unsigned char seg_judgement(unsigned char* Data, unsigned char mode);
+code unsigned char seg_DS1302_point[8] = {0,0,0,0,0,0,0,0};
 bit Beep_Enable_Flag;
 
 void Set_Rtcclok(unsigned char* Set_Data);
@@ -230,7 +231,7 @@ void Seg_proc(){
             Seg_Buf[3 * i + 1] = seg_Mode_flag[Seg_disp_Mode][i + 3 * ucAlarm_dat_index] % 16;
             Seg_Buf[2] = Seg_Buf[5] = 17;
         }
-        Seg_Disp(Seg_Buf);
+        Seg_Disp(Seg_Buf, seg_DS1302_point);
     } else {
         for (i = 0; i < 3; i++) {
             Seg_Buf[3 * i]     = Set_data[i + 3 * ucAlarm_dat_index] / 16;
@@ -239,7 +240,7 @@ void Seg_proc(){
         Seg_Buf[2] = Seg_Buf[5] = 17;
         Seg_Buf[set_index * 3 ] = seg_star_flag ? Set_data[set_index + 3 * ucAlarm_dat_index] /16: 16; 
         Seg_Buf[set_index * 3 + 1] = seg_star_flag ? Set_data[set_index + 3 * ucAlarm_dat_index] %16: 16; 
-        Seg_Disp(Seg_Buf);
+        Seg_Disp(Seg_Buf,seg_DS1302_point);
     }
 }
 

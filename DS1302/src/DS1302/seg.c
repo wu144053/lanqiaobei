@@ -1,7 +1,7 @@
 #include "seg.h"
 #include"STC15F2K60S2.H"
 unsigned char Seg_num[]={1,3,5,6,7,8,9, 16};
-extern char seg_Table[]= {
+extern code char seg_Table[]= {
     0xc0,           //0
     0xf9,           //1
     0xa4,           //2
@@ -29,9 +29,10 @@ extern char seg_Table[]= {
  * 
  * @param value 数码管上将要显示的数字-段选 
  */
-void Seg_Disp(unsigned char* seg_buf){
-    int j;
+void Seg_Disp(unsigned char* seg_buf,unsigned char* seg_point){
     unsigned char i;
+    unsigned int j;
+    P2 = 0x1f;
     for (i = 0; i < 8; i++) {
         P0 = 0x00;
         P2 = 0xef;
@@ -67,19 +68,13 @@ void Seg_Disp(unsigned char* seg_buf){
         P2 = 0xcf;
         P2 = 0x1f;
         P0 = seg_Table[*(seg_buf + i)];
+        if (seg_point[i]){
+            P0 &= 0x7f;
+        }
         P2 = 0xef;
         P2 = 0x1f;
-        j =1500 ;while (j--);
-        
+        for (j = 0; j < 1000; j++);
     }
 }
 
-/**
- * @brief 轮流扫描数码管
- * 
- * @param seg_num 存储显示数据的数组
- * 
- * @param length 显示数码管的长度
- * 
- */
 

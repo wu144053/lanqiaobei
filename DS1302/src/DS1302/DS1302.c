@@ -102,3 +102,4 @@ void DS1302_read_date(unsigned char* date){
 	date[1] = Read_Ds1302_Byte(0x89);//读取月份
 	date[2] = Read_Ds1302_Byte(0x87);//读取日期
 }
+

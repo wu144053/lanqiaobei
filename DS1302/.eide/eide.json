@@ -38,9 +38,11 @@
       "custom_dep": {
         "name": "default",
         "incList": [
-          "../../../../keil/C51/INC/STC"
+          "../../../../../keil/C51/INC/STC"
         ],
-        "libList": [],
+        "libList": [
+          "../../../../../keil/C51/INC/STC"
+        ],
         "defineList": []
       },
       "builderOptions": {

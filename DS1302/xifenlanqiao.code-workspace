@@ -24,7 +24,9 @@
             "*.cc": "cpp",
             "STC15F2K60S2.H": "cpp",
             "INTRINS.H": "cpp",
-            "REGX52.H": "cpp"
+            "REGX52.H": "cpp",
+            "DS1302.C": "cpp",
+            "KEY.C": "cpp"
         },
         "C_Cpp.default.configurationProvider": "cl.eide",
         "[yaml]": {
