@@ -172,7 +172,7 @@ void Timer0Server() interrupt 1{
     TL0 = 0X20;
     TH0 = 0XD1;
     if(++seg_timecount == 2)seg_timecount = 0;
-    if(++temperature_count == 500){temperature_count = 0;tempareture_set_timecount ^= 1;}
+    if(++temperature_count == 50){temperature_count = 0;/*tempareture_set_timecount ^= 1;*/}
     if(++DS18B20_key_count == 15)DS18B20_key_count = 0;
     if(key_time_flag)++key_time;
     if(++led_pwm == 12)led_pwm = 0;
