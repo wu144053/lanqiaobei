@@ -34,6 +34,15 @@ void temperature_capture(){
     if(temperature_count)return;
     temperature_count = 1;
     temperature = Read_tempareture();
+    // 检查除数是否为零
+if (tempareture_set_control[0] != 0) {
+    // 保留 temperature 为 float 类型，避免丢失小数部分
+    ucled[0] = ~((unsigned char)temperature) / (unsigned char)tempareture_set_control[0];
+} else {
+    // 如果除数为零，可以选择赋一个默认值，或者做其他处理
+    ucled[0] = 0;
+}
+
 }
 
 /**
@@ -137,20 +146,16 @@ void key_proce(){
 }
 
 
-void DS18B20_led_proc(){
-    ucled[0] = (~((unsigned char) temperature)/ tempareture_set_control[0]) ;
-}
+    //ucled[0] = (~((unsigned char) temperature)/ tempareture_set_control[0]) ;
 void main(){
     Timer0_Init();
-    //temperature_capture();
-    temperature = Read_tempareture();
-    //Led_Init();
+    temperature_capture();
+    Led_Init();
     while (1)
     {
-        DS18B20_led_proc();
         key_proce();
         Seg_proc_DS18B20();
-       // temperature_capture();
+        temperature_capture();
     }
 }
 
@@ -176,9 +181,9 @@ void Timer0Server() interrupt 1{
     if(++DS18B20_key_count == 15)DS18B20_key_count = 0;
     if(key_time_flag)++key_time;
     if(++led_pwm == 12)led_pwm = 0;
-    if(led_pwm < led_level){
-        Led_Disp(led_add,ucled[led_add]);
-    }else{
-        Led_Disp(led_add,0);
-    }
+    // if(led_pwm < led_level){
+    //     Led_Disp(led_add,ucled[led_add]);
+    // }else{
+    //     Led_Disp(led_add,0);
+    // }
 }

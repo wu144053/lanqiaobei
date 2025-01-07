@@ -9,7 +9,6 @@
 void Led_Disp(unsigned char add ,unsigned char enable){
     unsigned char temp;
     unsigned char temp_old;
-    P2 &= 0x1f;
     if(enable){
         temp  |= 0x01<<add;
     }else{
