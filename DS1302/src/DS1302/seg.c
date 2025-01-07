@@ -32,7 +32,6 @@ extern code char seg_Table[]= {
 void Seg_Disp(unsigned char* seg_buf,unsigned char* seg_point){
     unsigned char i;
     unsigned int j;
-    P2 = 0x1f;
     for (i = 0; i < 8; i++) {
         P0 = 0x00;
         P2 = 0xef;

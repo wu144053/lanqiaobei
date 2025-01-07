@@ -43,6 +43,7 @@ void temperature_capture(){
 void Seg_proc_DS18B20(){
     if(seg_timecount )return;
     seg_timecount = 1;
+    Seg_Disp(seg_Buf01,seg_DS18B20_point);
     switch (Seg_Dispmode)
     {
         case 0: /* constant-expression */
@@ -55,7 +56,6 @@ void Seg_proc_DS18B20(){
             seg_Buf01[5] = (unsigned char)temperature % 10;
             seg_Buf01[6] = (unsigned int)(temperature * 10) % 10;
             seg_Buf01[7] = 12;//C
-    Seg_Disp(seg_Buf01,seg_DS18B20_point);
             break;
         case 1:
             seg_DS18B20_point[5] = 0;
@@ -69,6 +69,7 @@ void Seg_proc_DS18B20(){
             seg_Buf01[3*tempareture_set_index + 1] = tempareture_set_timecount ? (unsigned char)tempareture_set_data[tempareture_set_index -1] % 10 : 16;
     Seg_Disp(seg_Buf01,seg_DS18B20_point);
         break;
+        
     }
 }
 
@@ -103,6 +104,7 @@ void key_proce(){
         case 12:
             tempareture_set_control[0] = 30;
             tempareture_set_control[1] = 20;
+            break;
     }
     if (Seg_Dispmode == 1) {
             if(DS18B20_key_flag == 14 || DS18B20_key_flag == 13){
@@ -170,7 +172,7 @@ void Timer0Server() interrupt 1{
     TL0 = 0X20;
     TH0 = 0XD1;
     if(++seg_timecount == 2)seg_timecount = 0;
-    if(++temperature_count == 50){temperature_count = 0;tempareture_set_timecount ^= 1;}
+    if(++temperature_count == 500){temperature_count = 0;tempareture_set_timecount ^= 1;}
     if(++DS18B20_key_count == 15)DS18B20_key_count = 0;
     if(key_time_flag)++key_time;
     if(++led_pwm == 12)led_pwm = 0;
