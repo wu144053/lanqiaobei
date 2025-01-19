@@ -11,7 +11,7 @@ unsigned char key_up,key_dow,key_numer;//按键上升沿，按键下降沿，按
 unsigned char key_old , key_now ;
 unsigned char key_time;//按键检测的时间
 unsigned int dat1,dat2 ; //接收到的数据转换数据
-unsigned char Seg_Disply_Mode;//数码管显示界面d0-电压显示界面1-电压输出界面
+unsigned char Seg_Disply_Mode = 0;//数码管显示界面d0-电压显示界面1-电压输出界面
 unsigned char Out_Disply_Mode;//输出模式0-2V 1-随电压输出
 float voltage;//电压
 unsigned char Voltage_Out;
@@ -32,14 +32,17 @@ void lcd_pro(){
 void key_pro(){
     if(key_time)return ;
     key_time = 1;
+    key_old = key_now;
     key_now = key_check();
     if(key_now != 0 &&  key_old == 0 ){
         key_up = key_now;//检测到上升沿
-    }else{key_up = 0;}
+    }else{
+        key_up = 0;
+    }
     switch ( key_up )
     {
-        case 4:Seg_Disply_Mode ^= 1;//数码管显示模式切换
-        case 5:Out_Disply_Mode ^= 1;//电压输出模式切换
+        case 4:Seg_Disply_Mode ^= 1;break;//数码管显示模式切换
+        case 5:Out_Disply_Mode ^= 1;break;//电压输出模式切换
     }
 }
 
@@ -73,6 +76,7 @@ void main(){
         seg_display(seg_date,seg_Tabble,seg_point);
         lcd_pro();
         seg_pro();
+        key_pro();
     }
     
 }
