@@ -18,7 +18,8 @@
             "*.c++": "cpp",
             "*.cpp": "cpp",
             "*.cxx": "cpp",
-            "*.cc": "cpp"
+            "*.cc": "cpp",
+            "STC15F2K60S2.H": "cpp"
         },
         "[yaml]": {
             "editor.insertSpaces": true,

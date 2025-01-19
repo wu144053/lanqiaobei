@@ -23,17 +23,25 @@
       "compileConfig": {
         "options": "null"
       },
-      "uploader": "Custom",
+      "uploader": "stcgal",
       "uploadConfig": {
         "bin": "",
-        "commandLine": "",
-        "eraseChipCommand": ""
+        "eepromImgPath": "null",
+        "extraOptions": "",
+        "options": ".eide/stc.flash.json"
       },
-      "uploadConfigMap": {},
+      "uploadConfigMap": {
+        "Custom": {
+          "bin": "",
+          "commandLine": "",
+          "eraseChipCommand": ""
+        }
+      },
       "custom_dep": {
         "name": "default",
         "incList": [
-          "../../../../../../../keil/C51/INC"
+          "../../../../../../../keil/C51/INC",
+          "../../../../../../../keil/C51/INC/STC"
         ],
         "libList": [
           "../../../../../../../keil/C51/LIB"
